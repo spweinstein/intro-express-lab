@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
+app.use(morgan("dev"));
 
 const collectibles = [
   { name: "shiny ball", price: 5.95 },
@@ -17,8 +18,6 @@ const shoes = [
   { name: "Jet Boots", price: 1000, type: "boot" },
   { name: "Fifty-Inch Heels", price: 175, type: "heel" },
 ];
-
-app.use(morgan("dev"));
 
 app.listen(3000, () => {
   console.clear();
@@ -40,7 +39,7 @@ app.get("/roll/:rollNumber", (req, res) => {
   if (!isNum) {
     res.send("You must specify a number.");
   } else {
-    const resNum = Math.floor(Math.random() * rollNum);
+    const resNum = Math.floor(Math.random() * rollNum + 1);
     res.send(`You rolled a ${resNum}.`);
   }
 });
@@ -77,9 +76,7 @@ app.get("/shoes", (req, res) => {
     );
   }
   if (shoeType !== undefined) {
-    filteredShoeList = filteredShoeList.filter(
-      (shoe) => shoe.type === shoeType
-    );
+    filteredShoeList = filteredShoeList.filter((shoe) => shoe.type == shoeType);
   }
   res.send(filteredShoeList);
 });
