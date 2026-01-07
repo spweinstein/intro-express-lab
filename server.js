@@ -48,7 +48,8 @@ app.get("/roll/:rollNumber", (req, res) => {
 
 app.get("/collectibles/:index", (req, res) => {
   const index = +req.params.index;
-  const isValid = index === 0 || index === 1 || index === 2;
+  const isValid =
+    index < collectibles.length && index >= 0 && Number.isInteger(index); //index === 0 || index === 1 || index === 2;
   if (isValid) {
     const item = collectibles[index];
     res.send(`Want to buy a ${item.name}? It's yours for ${item.price}!`);
